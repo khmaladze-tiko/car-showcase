@@ -1,6 +1,6 @@
     "use client";
-
-    import { useState } from 'react';
+    import { useRouter } from 'next/navigation';
+    import React, { useState } from 'react';
     import { SearchManufacturer } from './'
     import Image from 'next/image';
     
@@ -19,9 +19,35 @@
     const SearchBar = () => {
         const [manufacturer, setManufacturer] = useState('');
         const [model, setModel] = useState('')
-        const handleSearch = () => {}
+        const router = useRouter();
+        
+        const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+          e.preventDefault();
 
+          if(manufacturer === '' && model === '') {
+            return alert('Please fill in the search bar')
+          }
+        }
 
+        const updateSearchParams = (model: string, manufacturer: string) => {
+          const searchParams = new URLSearchParams(window.location.search);
+        
+        if(model) {
+          searchParams.set('model', model)
+        } else {
+          searchParams.delete('model')
+        }
+
+        if(manufacturer) {
+          searchParams.set('manufacturer', manufacturer)
+        } else {
+          searchParams.delete('manufacturer')
+        }
+
+        const newPathname = `${window.location.pathname}?${searchParams.toString()}`
+
+        router.push(newPathname)
+      };
       return (
         <form className="searchbar" onSubmit={handleSearch}> 
             <div className="searchbar__item">
@@ -29,7 +55,7 @@
                     manufacturer={manufacturer}
                     setManufacturer={setManufacturer}
                 />
-                <SearchButton otherClasses="sm: hidden"/>
+                <SearchButton otherClasses="sm:hidden"/>
             </div>
             <div className="searchbar__item">
               <Image 
@@ -49,7 +75,7 @@
               />
               <SearchButton otherClasses="sm:hidden" />
             </div>
-            <SearchButton otherClasses="max-sm:hidden"/>
+            <SearchButton otherClasses="max-sm:hidden" />
         </form>
       )
     }
