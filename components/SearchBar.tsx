@@ -20,13 +20,17 @@
         const [manufacturer, setManufacturer] = useState('');
         const [model, setModel] = useState('')
         const router = useRouter();
-        
+
         const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
           e.preventDefault();
 
           if(manufacturer === '' && model === '') {
             return alert('Please fill in the search bar')
           }
+
+          updateSearchParams(
+            model.toLocaleLowerCase(), 
+            manufacturer.toLocaleLowerCase())
         }
 
         const updateSearchParams = (model: string, manufacturer: string) => {
