@@ -41,6 +41,7 @@ export default function Home() {
   }
 
   useEffect(() => {
+    console.log(fuel, year, limit, manufacturer, model)
     getCars();
   }, [fuel, year, limit, manufacturer, model])
   
@@ -87,8 +88,9 @@ export default function Home() {
             </div>
           )}
           <ShowMore 
-            pageNumber={(limit || 10) / 10}
-            isNext={(limit || 10) > allCars.length }
+            pageNumber={limit / 10}
+            isNext={limit > allCars.length }
+            setLimit={setLimit}
           />
 
         </section>

@@ -16,7 +16,7 @@
       </button>
     )
 
-    const SearchBar = (setManufacturer, setModel) => {
+    const SearchBar = ({setManufacturer, setModel}) => {
         const [searchManufacturer, setSearchManufacturer] = useState('');
         const [searchModel, setSearchModel] = useState('')
         const router = useRouter();
@@ -36,8 +36,8 @@
         <form className="searchbar" onSubmit={handleSearch}> 
             <div className="searchbar__item">
                 <SearchManufacturer 
-                    manufacturer={searchManufacturer}
-                    setManufacturer={setManufacturer}
+                    selected={searchManufacturer}
+                    setSelected={setSearchManufacturer}
                 />
                 <SearchButton otherClasses="sm:hidden"/>
             </div>
@@ -53,7 +53,7 @@
                 type="text" 
                 name="model"
                 value={searchModel}
-                onChange={(e) => setModel(e.target.value)}
+                onChange={(e) => setSearchModel(e.target.value)}
                 placeholder="Tiguan"
                 className="searchbar__input"
               />
